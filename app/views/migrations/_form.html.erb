@@ -1,0 +1,52 @@
+<%= form_for @migration, :html => { :class => "form-horizontal migration" } do |f| %>
+
+    <% if @migration.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@migration.errors.count, "error") %> prohibited this migration from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @migration.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@migration[:name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :timestamp, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :timestamp, :class => 'form-control' %>
+    </div>
+    <%= error_span(@migration[:timestamp]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :content, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :content, :class => 'form-control' %>
+    </div>
+    <%= error_span(@migration[:content]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :envs, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :envs, :class => 'form-control' %>
+    </div>
+    <%= error_span(@migration[:envs]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            migrations_path, :class => 'btn btn-default' %>
+
+<% end %>
