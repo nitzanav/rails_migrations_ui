@@ -1,15 +1,17 @@
-class Migration < ActiveRecord::Base
+require 'ostruct'
 
-  def self.all_envs
-    [:development, :test, :production]
+class Migration < Struct.new(:version, :name, :filename, :status, :env)
+
+  def self.all
+    initialize_by_hash MigrationsAdapter.read
   end
 
-  def envs
-    [:development, :test]
+  def up?
+    status == 'up'
   end
 
-  def migrated?(env)
-    envs.include? env
+  def down?
+    status == 'down'
   end
 
 end
