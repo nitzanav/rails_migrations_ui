@@ -5,7 +5,10 @@ class MigrationsAdapter
   end
 
   def self.read_env env
-    JSON.parse(run_rake(env, 'db:migrate:status_json')).merge(env: env)
+    output = JSON.parse(run_rake(env, 'db:migrate:status_json'))
+    return [] if output.is_a?(Hash) && output["Error"].present?
+
+    output.map{ |migration| migration.merge(env: env) }
   end
 
   def self.run_rake(env, task_name)

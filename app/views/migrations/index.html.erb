@@ -1,22 +1,22 @@
 <%# Buttons: migrate, get sql migrations, commit+pull+migrate+push(if no conflicts) %>
 <%- model_class = Migration -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%=t '.title', :default => 'Migrations' %></h1>
 </div>
 <table class="table table-hover">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:timestamp) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th>Version</th>
+      <th>Name</th>
       <% all_envs.each do |env| %>
-        <th><%= model_class.human_attribute_name(env) %></th>
+        <th><%= env.humanize %></th>
       <% end %>
     </tr>
   </thead>
   <tbody>
     <% @migrations.each do |migration| %>
       <tr>
-        <td><%= migration.timestamp %></td>
+        <td><%= migration.version %></td>
         <td><%= migration.name %></td>
         <% all_envs.each do |env| %>
           <td class="<%= migration.migrated?(env) ? 'success' : 'danger' %>"><i class="fa fa-<%= migration.migrated?(env) ? 'check' : 'times' %>-circle-o fa-3x"></i></td>

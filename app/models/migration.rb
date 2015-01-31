@@ -1,4 +1,4 @@
-require 'ostruct'
+require "struct_initialize_by_hash"
 
 class Migration < Struct.new(:version, :name, :filename, :status, :env)
 
