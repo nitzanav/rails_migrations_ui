@@ -9,7 +9,7 @@
       <th>Version</th>
       <th>Name</th>
       <% all_envs.each do |env| %>
-        <th><%= env.humanize %></th>
+        <th><%= env.to_s.humanize %></th>
       <% end %>
     </tr>
   </thead>
@@ -19,7 +19,7 @@
         <td><%= migration.version %></td>
         <td><%= migration.name %></td>
         <% all_envs.each do |env| %>
-          <td class="<%= migration.migrated?(env) ? 'success' : 'danger' %>"><i class="fa fa-<%= migration.migrated?(env) ? 'check' : 'times' %>-circle-o fa-3x"></i></td>
+          <td class="<%= migration.up?(env) ? 'success' : 'danger' %>"><i class="fa fa-<%= migration.up?(env) ? 'check' : 'times' %>-circle-o fa-3x"></i></td>
         <% end %>
       </tr>
     <% end %>

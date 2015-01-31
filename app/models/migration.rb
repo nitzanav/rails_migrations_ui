@@ -1,17 +1,25 @@
-require "struct_initialize_by_hash"
-
-class Migration < Struct.new(:version, :name, :filename, :status, :env)
+class Migration < Struct.new(:migrations)
 
   def self.all
-    initialize_by_hash MigrationsAdapter.read
+    EnvMigration.all.group_by(&:name).values.map { |migrations| new(migrations) }
   end
 
-  def up?
-    status == 'up'
+  delegate :version, :name, :filename, :to => :first
+
+  def first
+    migrations.first
   end
 
-  def down?
-    status == 'down'
+  def up
+    migrations.select(&:up?)
+  end
+
+  def envs_up
+    up.map(&:env)
+  end
+
+  def up?(env)
+    envs_up.include? env
   end
 
 end
